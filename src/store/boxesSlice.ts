@@ -3,7 +3,7 @@ import type { BoxData } from "../types/box"
 
 const initialState: BoxData[] = []
 
-const boxesSlice = createSlice({
+export const boxesSlice = createSlice({
     name: "boxes",
     initialState,
     reducers: {
@@ -19,3 +19,5 @@ const boxesSlice = createSlice({
         }
     }
 })
+
+export const { addBox, updateBoxColor } = boxesSlice.actions
