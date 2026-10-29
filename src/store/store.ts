@@ -6,3 +6,7 @@ export const store = configureStore({
         boxes : boxesSlice.reducer, 
     }
 })
+
+export type AppStore = typeof store
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']
