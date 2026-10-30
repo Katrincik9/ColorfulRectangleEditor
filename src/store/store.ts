@@ -1,7 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, legacy_createStore } from "redux";
 import { boxesReducer } from "./boxesReducer";
 
-export const store = configureStore({ reducer: boxesReducer })
+const rootReducer = combineReducers({ boxes: boxesReducer })
+export const store = legacy_createStore(rootReducer)
 
 export type AppStore = typeof store
 export type RootState = ReturnType<AppStore['getState']>
