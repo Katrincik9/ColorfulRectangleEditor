@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { boxesSlice } from "./boxesSlice";
+import { boxesReducer } from "./boxesReducer";
 
 export const store = configureStore({
     reducer: {
-        boxes : boxesSlice.reducer, 
+        boxes: boxesReducer, 
     }
 })
 
