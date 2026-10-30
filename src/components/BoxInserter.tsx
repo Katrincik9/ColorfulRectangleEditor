@@ -1,17 +1,38 @@
-import { useAppDispatch } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { addBox } from '../store/boxActions';
 import type { BoxData, RGB } from '../types/box';
 import './BoxInserter.css';
 import { useForm } from 'react-hook-form';
 
+const min = 0;
+const max = 255;
+const randomRGB = () => Math.floor(Math.random() * (max - min + 1)) + min;
+const createRandomRGB = () => ({
+    red: randomRGB(),
+    green: randomRGB(),
+    blue: randomRGB(),
+});
+
 export function BoxInserter() {
     const { register, handleSubmit, reset } = useForm<RGB>();
     const dispatch = useAppDispatch();
+    const boxesCount = useAppSelector(state => state.boxes.length);
 
     function onSubmit(data: RGB) {
         const box: BoxData = {
-            id: crypto.randomUUID(),
+            id: `box-${boxesCount + 1}`,
             rgb: data,
+            timestamp: new Date().toISOString(),
+        };
+
+        dispatch(addBox(box));
+        reset();
+    }
+
+    function onRandomSubmit() {
+        const box: BoxData = {
+            id: `box-${boxesCount + 1}`,
+            rgb: createRandomRGB(),
             timestamp: new Date().toISOString(),
         };
 
@@ -40,7 +61,7 @@ export function BoxInserter() {
 
                 <div className="form-submit-buttons">
                     <button type="submit">Insert</button>
-                    <button type="button">Insert Random</button>
+                    <button type="button" onClick={onRandomSubmit}>Insert Random</button>
                 </div>
             </form>
         </div>
