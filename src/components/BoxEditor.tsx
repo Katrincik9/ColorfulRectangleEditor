@@ -25,7 +25,19 @@ export function BoxEditor() {
     return (
         <div className="box-editor">
             <h3>Box Editor</h3>
-            <button>Info</button>
+            <button command="show-modal" commandFor="info">Info</button>
+
+            <dialog id="info">
+                <p className="box-title">Box info:</p>
+                <span>R: {selectedBox?.rgb.red} </span>
+                <span>G: {selectedBox?.rgb.green} </span>
+                <span>B: {selectedBox?.rgb.blue}</span>
+                <p>Box number: {boxNr}</p>
+                <p>Box id: {selectedBox?.id}</p>
+                <p>Creation time: {selectedBox?.timestamp}</p>
+                <button command="close" commandFor="info">Close</button>
+            </dialog>
+
             <form className="form-box-editor" onSubmit={handleSubmit(onSubmit)}>
                 <div className="rgb-colors">
                     <div className="red-color-input">
