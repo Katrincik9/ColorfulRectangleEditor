@@ -1,16 +1,17 @@
-import { useBoxContext } from '../context/boxContext';
-import { useAppSelector } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { selectBox } from '../store/boxActions';
 import type { RGB } from '../types/box';
 import './BoxList.css';
 
 export function BoxList() {
-    const boxes = useAppSelector(state => state.boxes);
-    const { setSelectedBox } = useBoxContext();
+    const boxes = useAppSelector(state => state.boxesReducer.boxes);
+    const dispatch = useAppDispatch();
+
     return (
         <>
             <h3>Box List</h3>
             <div className="box-list">
-                {boxes.map(box => <BoxItem key={box.id} color={box.rgb} onSelect={() => setSelectedBox(box)}></BoxItem>)}
+                {boxes.map(box => <BoxItem key={box.id} color={box.rgb} onSelect={() => dispatch(selectBox(box.id))}></BoxItem>)}
             </div>
         </>
     )

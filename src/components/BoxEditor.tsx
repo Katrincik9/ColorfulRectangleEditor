@@ -1,15 +1,26 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import './BoxEditor.css';
 import type { RGB } from '../types/box';
-import { useBoxContext } from '../context/boxContext';
+import { updateBoxColor } from '../store/boxActions';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useEffect } from 'react';
 
 export function BoxEditor() {
-    const { register, handleSubmit } = useForm<RGB>();
-    const { selectedBox } = useBoxContext();
+    const { register, handleSubmit, reset, control } = useForm<RGB>();
+    const watchedRGB = useWatch({ control })
+    const dispatch = useAppDispatch();
+    const selectedBoxId = useAppSelector(state => state.boxesReducer.selectedBoxId);
+    const selectedBox = useAppSelector(state => state.boxesReducer.boxes.find(box => box.id === selectedBoxId))
+    const boxNr = selectedBoxId?.split("-")[1];
 
-    function onSubmit() {
-
+    function onSubmit(data: RGB) {
+        if (!selectedBoxId) return
+        dispatch(updateBoxColor(selectedBoxId, data));
     }
+
+    useEffect(() => {
+        reset(selectedBox?.rgb);
+    }, [selectedBox, reset])
 
     return (
         <div className="box-editor">
@@ -31,11 +42,11 @@ export function BoxEditor() {
                     </div>
                 </div>
 
-                <p>Box number : 1</p>
+                <p>Box number : {boxNr}</p>
                 <div className="rectangle"
                     style={{
-                        backgroundColor: selectedBox
-                            ? `rgb(${selectedBox.rgb.red}, ${selectedBox.rgb.green}, ${selectedBox.rgb.blue})`
+                        backgroundColor: watchedRGB
+                            ? `rgb(${watchedRGB.red}, ${watchedRGB.green}, ${watchedRGB.blue})`
                             : 'transparent',
                     }}
                 />
