@@ -1,7 +1,7 @@
 import { combineReducers, legacy_createStore } from "redux";
 import { boxesReducer } from "./boxesReducer";
 
-const rootReducer = combineReducers({ boxes: boxesReducer })
+const rootReducer = combineReducers({ boxesReducer })
 export const store = legacy_createStore(rootReducer)
 
 export type AppStore = typeof store
