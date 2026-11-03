@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { useEffect } from 'react';
 
 export function BoxEditor() {
-    const { register, handleSubmit, reset, control } = useForm<RGB>();
+    const { register, handleSubmit, reset, control, formState: { errors } } = useForm<RGB>();
     const watchedRGB = useWatch({ control })
     const dispatch = useAppDispatch();
     const selectedBoxId = useAppSelector(state => state.boxesReducer.selectedBoxId);
@@ -26,14 +26,14 @@ export function BoxEditor() {
     return (
         <div className="box-editor">
             <h4>Box Editor</h4>
-            <button className="info-btn" command="show-modal" commandFor="info">Info</button>
+            <button className="info-btn" command="show-modal" commandFor="info" disabled={!selectedBoxId}>Info</button>
 
             <dialog id="info">
                 <h3>Box info:</h3>
                 <div className="rectangle"
                     style={{
-                        backgroundColor: watchedRGB
-                            ? `rgb(${watchedRGB.red}, ${watchedRGB.green}, ${watchedRGB.blue})`
+                        backgroundColor: selectedBox
+                            ? `rgb(${selectedBox.rgb.red}, ${selectedBox.rgb.green}, ${selectedBox.rgb.blue})`
                             : 'transparent',
                     }}
                 />
@@ -49,19 +49,19 @@ export function BoxEditor() {
                 <div className="rgb-colors">
                     <div className="red-color-input">
                         <label htmlFor="editor-red">R:</label>
-                        <input type="number" id="editor-red" {...register("red", { required: true, valueAsNumber: true, min: 0, max: 255 })} ></input>
+                        <input className={errors.red ? "invalid" : ''} type="number" id="editor-red" {...register("red", { required: true, valueAsNumber: true, min: 0, max: 255 })} ></input>
                     </div>
                     <div className="green-color-input">
                         <label htmlFor="editor-green">G:</label>
-                        <input type="number" id="editor-green" {...register("green", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
+                        <input className={errors.green ? "invalid" : ''} type="number" id="editor-green" {...register("green", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
                     </div>
                     <div className="blue-color-input">
                         <label htmlFor="editor-blue">B:</label>
-                        <input type="number" id="editor-blue" {...register("blue", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
+                        <input className={errors.blue ? "invalid" : ''} type="number" id="editor-blue" {...register("blue", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
                     </div>
                 </div>
 
-                <p>Box number : {boxNr}</p>
+                <p>Box number: {boxNr}</p>
                 <div className="rectangle"
                     style={{
                         backgroundColor: watchedRGB

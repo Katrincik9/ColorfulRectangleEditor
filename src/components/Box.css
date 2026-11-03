@@ -37,6 +37,10 @@
     border: 1px solid var(--borderColor);
 }
 
+.rgb-colors input.invalid {
+    border: 2px solid #e53935;
+    outline: none;
+}
 .form-submit-buttons {
     display: flex;
     flex-direction: column;

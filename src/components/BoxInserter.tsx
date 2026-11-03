@@ -15,7 +15,7 @@ const createRandomRGB = () => ({
 });
 
 export function BoxInserter() {
-    const { register, handleSubmit, reset } = useForm<RGB>();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<RGB>();
     const dispatch = useAppDispatch();
     const boxesCount = useAppSelector(state => state.boxesReducer.boxes.length);
 
@@ -48,21 +48,21 @@ export function BoxInserter() {
                 <div className="rgb-colors">
                     <div className="red-color-input">
                         <label htmlFor="inserter-red">R:</label>
-                        <input type="number" id="inserter-red" {...register("red", { required: true, valueAsNumber: true, min: 0, max: 255 })} ></input>
+                        <input className={errors.red ? "invalid" : ''} type="number" id="inserter-red" {...register("red", { required: true, valueAsNumber: true, min: 0, max: 255 })} ></input>
                     </div>
                     <div className="green-color-input">
                         <label htmlFor="inserter-green">G:</label>
-                        <input type="number" id="inserter-green" {...register("green", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
+                        <input className={errors.green ? "invalid" : ''} type="number" id="inserter-green" {...register("green", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
                     </div>
                     <div className="blue-color-input">
                         <label htmlFor="inserter-blue">B:</label>
-                        <input type="number" id="inserter-blue" {...register("blue", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
+                        <input className={errors.blue ? "invalid" : ''} type="number" id="inserter-blue" {...register("blue", { required: true, valueAsNumber: true, min: 0, max: 255 })}></input>
                     </div>
                 </div>
 
                 <div className="form-submit-buttons">
-                    <button type="submit">Insert</button>
-                    <button type="button" onClick={onRandomSubmit}>Insert Random</button>
+                    <button type="submit" disabled={boxesCount >= 9}>Insert</button>
+                    <button type="button" disabled={boxesCount >= 9} onClick={onRandomSubmit}>Insert Random</button>
                 </div>
             </form>
         </div>
