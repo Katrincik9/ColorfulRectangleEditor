@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { addBox } from '../store/boxActions';
 import type { BoxData, RGB } from '../types/box';
 import './BoxInserter.css';
+import './Box.css';
 import { useForm } from 'react-hook-form';
 
 const min = 0;
@@ -42,7 +43,7 @@ export function BoxInserter() {
 
     return (
         <div className="box-inserter">
-            <h3>Box Inserter</h3>
+            <h4>Box Inserter</h4>
             <form className="form-box-inserter" onSubmit={handleSubmit(onSubmit)}>
                 <div className="rgb-colors">
                     <div className="red-color-input">

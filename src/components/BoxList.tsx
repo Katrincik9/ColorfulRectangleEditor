@@ -6,19 +6,21 @@ import './BoxList.css';
 export function BoxList() {
     const boxes = useAppSelector(state => state.boxesReducer.boxes);
     const dispatch = useAppDispatch();
+    const selectedBoxId = useAppSelector(state => state.boxesReducer.selectedBoxId);
 
     return (
         <>
-            <h3>Box List</h3>
+            <h4>Box List</h4>
             <div className="box-list">
-                {boxes.map(box => <BoxItem key={box.id} color={box.rgb} onSelect={() => dispatch(selectBox(box.id))}></BoxItem>)}
+                {boxes.map(box => <BoxItem key={box.id} color={box.rgb} selected={box.id === selectedBoxId} onSelect={() => dispatch(selectBox(box.id))}></BoxItem>)}
             </div>
         </>
     )
 }
 
-export function BoxItem({ color, onSelect }: { color: RGB, onSelect(): void }) {
+export function BoxItem({ color, onSelect, selected }: { color: RGB, onSelect(): void, selected: boolean }) {
     return (
-        <button className="box-item" style={{ background: `rgb(${color.red}, ${color.green}, ${color.blue})` }} onClick={onSelect}></button>
+        <button className={`box-item ${selected ? "selected" : ""}`} style={{ background: `rgb(${color.red}, ${color.green}, ${color.blue})` }
+        } onClick={onSelect} ></button >
     )
 }

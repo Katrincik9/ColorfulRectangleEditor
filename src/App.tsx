@@ -6,7 +6,7 @@ import { BoxList } from './components/BoxList'
 function App() {
   return (
     <div className="rectangle-editor">
-      <h1>Colorful Rectangles Editor</h1>
+      <h2>Colorful Rectangles Editor</h2>
       <div className="box-form">
         <BoxInserter />
         <BoxEditor />

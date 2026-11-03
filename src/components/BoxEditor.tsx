@@ -1,5 +1,6 @@
 import { useForm, useWatch } from 'react-hook-form';
 import './BoxEditor.css';
+import './Box.css';
 import type { RGB } from '../types/box';
 import { updateBoxColor } from '../store/boxActions';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
@@ -24,18 +25,24 @@ export function BoxEditor() {
 
     return (
         <div className="box-editor">
-            <h3>Box Editor</h3>
-            <button command="show-modal" commandFor="info">Info</button>
+            <h4>Box Editor</h4>
+            <button className="info-btn" command="show-modal" commandFor="info">Info</button>
 
             <dialog id="info">
-                <p className="box-title">Box info:</p>
+                <h3>Box info:</h3>
+                <div className="rectangle"
+                    style={{
+                        backgroundColor: watchedRGB
+                            ? `rgb(${watchedRGB.red}, ${watchedRGB.green}, ${watchedRGB.blue})`
+                            : 'transparent',
+                    }}
+                />
                 <span>R: {selectedBox?.rgb.red} </span>
                 <span>G: {selectedBox?.rgb.green} </span>
                 <span>B: {selectedBox?.rgb.blue}</span>
                 <p>Box number: {boxNr}</p>
                 <p>Box id: {selectedBox?.id}</p>
-                <p>Creation time: {selectedBox?.timestamp}</p>
-                <button command="close" commandFor="info">Close</button>
+                <p>Creation time: {selectedBox ? new Date(selectedBox.timestamp).toLocaleString() : ""}</p>                <button className="close-info-btn" command="close" commandFor="info">Close</button>
             </dialog>
 
             <form className="form-box-editor" onSubmit={handleSubmit(onSubmit)}>

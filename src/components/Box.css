@@ -1,0 +1,57 @@
+.box-inserter,
+.box-editor {
+    background-color: #daead0;
+    border: 1px solid var(--borderColor);
+    border-radius: 30px;
+    padding: 20px;
+    width: clamp(200px, 30vw, 300px);
+}
+
+.box-form h4 {
+    text-align: center;
+    margin: 0px 0px 25px;
+}
+
+.rgb-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rgb-colors>div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rgb-colors label {
+    width: 15px;
+    font-size: 14px;
+}
+
+.rgb-colors input {
+    width: clamp(40px, 6vw, 60px);
+    height: clamp(25px, 3vw, 30px);
+    padding: 5px;
+    background: #d1e2f3;
+    border: 1px solid var(--borderColor);
+}
+
+.form-submit-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(15px, 2vw, 24px);
+}
+
+.box-form button {
+    background: #71a7d7;
+    border: 1px solid var(--borderColor);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: clamp(13px, 1.2vw, 14px);
+}
+
+.form-submit-buttons button {
+    width: clamp(75px, 12vw, 122px);
+    height: clamp(35px, 4vw, 38px);
+}

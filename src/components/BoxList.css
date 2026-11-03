@@ -1,4 +1,33 @@
+.box-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px 50px;
+    padding: 20px;
+    background-color: #d0e3f2;
+    border: 1px solid var(--borderColor);
+}
+
+.box-item.selected {
+    border: 4px solid #60e163;
+}
 .box-item {
-    width: 55px;
-    height: 35px;
+    height: 80px;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .rectangle-editor>h4 {
+        margin: 20px 0 5px 0;
+    }
+    
+    @media (max-width: 900px) {
+        .box-list {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 600px) {
+        .box-list {
+            grid-template-columns: 1fr;
+        }
 }

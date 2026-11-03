@@ -1,4 +1,65 @@
-.rectangle {
-    width: 55px;
-    height: 35px;
+.box-editor {
+    position: relative;
+}
+
+.info-btn {
+    position: absolute;
+    right: 22px;
+    top: clamp(16px, calc(60px - 3vw), 45px);
+    width: 70px;
+    height: 25px;
+}
+
+.form-box-editor {
+    display: grid;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-box-editor .rectangle {
+    grid-column: 2;
+    grid-row: 1;
+    width: clamp(70px, 12vw, 120px);
+    height: clamp(60px, 10vw, 100px);
+}
+
+.form-box-editor p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.box-editor dialog {
+    position: relative;
+    border: 1px solid var(--borderColor);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.box-editor dialog h3 {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+}
+
+.box-editor dialog .rectangle {
+    position: absolute;
+    width: 100px;
+    height: 90px;
+    right: 22px;
+    top: 55px;
+}
+
+.box-editor dialog .close-info-btn {
+    min-width: 122px;
+    min-height: 38px;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+    .box-editor dialog .rectangle {
+        width: clamp(70px, 24vw, 100px);
+        height: clamp(60px, 22vw, 90px);
+    }
 }
