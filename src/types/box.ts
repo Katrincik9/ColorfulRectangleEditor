@@ -12,5 +12,6 @@ export interface RGB {
 
 export interface BoxesState {
     boxes: BoxData[],
-    selectedBoxId: string | null
+    selectedBoxId: string | null,
+    nextBoxId: number
 }

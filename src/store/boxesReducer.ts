@@ -1,11 +1,12 @@
 import type { UnknownAction } from "redux"
 import type { BoxesState } from "../types/box"
-import type { BoxesAction } from "./boxActions"
+import { type BoxesAction } from "./boxActions"
 import { actions } from "./constants"
 
 const initialState: BoxesState = {
     boxes: [],
-    selectedBoxId: null
+    selectedBoxId: null,
+    nextBoxId: 1
 }
 
 function isBoxesAction(action: UnknownAction): action is BoxesAction {
@@ -21,8 +22,12 @@ export function boxesReducer(state = initialState, action: UnknownAction) {
                 ...state,
                 boxes: [
                     ...state.boxes,
-                    action.payload
-                ]
+                    {
+                        ...action.payload,
+                        id: `box-${state.nextBoxId}`
+                    }
+                ],
+                nextBoxId: state.nextBoxId + 1
             }
         }
     }
@@ -45,6 +50,14 @@ export function boxesReducer(state = initialState, action: UnknownAction) {
         return {
             ...state,
             selectedBoxId: action.payload.id
+        }
+    }
+
+    if (action.type === actions.deleteBox) {
+        return {
+            ...state,
+            boxes: state.boxes.filter(box => box.id !== state.selectedBoxId),
+            selectedBoxId: null
         }
     }
 

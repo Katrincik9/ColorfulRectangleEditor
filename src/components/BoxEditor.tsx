@@ -2,7 +2,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import './BoxEditor.css';
 import './Box.css';
 import type { RGB } from '../types/box';
-import { updateBoxColor } from '../store/boxActions';
+import { deleteBox, updateBoxColor } from '../store/boxActions';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { useEffect } from 'react';
 
@@ -12,7 +12,9 @@ export function BoxEditor() {
     const dispatch = useAppDispatch();
     const selectedBoxId = useAppSelector(state => state.boxesReducer.selectedBoxId);
     const selectedBox = useAppSelector(state => state.boxesReducer.boxes.find(box => box.id === selectedBoxId))
-    const boxNr = selectedBoxId?.split("-")[1];
+    const boxes = useAppSelector(state => state.boxesReducer.boxes);
+    const selectedBoxIndex = boxes.findIndex(box => box.id === selectedBoxId);
+    const boxNr = selectedBoxIndex + 1;
 
     function onSubmit(data: RGB) {
         if (!selectedBoxId) return
@@ -72,7 +74,8 @@ export function BoxEditor() {
 
                 <div className="form-submit-buttons edit-buttons">
                     <button type="submit" disabled={!isDirty || selectedBoxId === null || !isValid}>Apply Color</button>
-                    <button type="button" className="cancel-btn" disabled={!isDirty} onClick={() => reset()}>Cancel Changes</button>
+                    <button type="button" disabled={!isDirty} onClick={() => reset()}>Cancel Changes</button>
+                    <button type="button" disabled={selectedBoxId === null} onClick={() => dispatch(deleteBox(selectedBoxId))}>Delete box</button>
                 </div>
             </form>
         </div>

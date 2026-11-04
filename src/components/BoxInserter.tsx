@@ -20,8 +20,7 @@ export function BoxInserter() {
     const boxesCount = useAppSelector(state => state.boxesReducer.boxes.length);
 
     function onSubmit(data: RGB) {
-        const box: BoxData = {
-            id: `box-${boxesCount + 1}`,
+        const box: Omit<BoxData, "id"> = {
             rgb: data,
             timestamp: new Date().toISOString(),
         };
@@ -31,8 +30,7 @@ export function BoxInserter() {
     }
 
     function onRandomSubmit() {
-        const box: BoxData = {
-            id: `box-${boxesCount + 1}`,
+        const box: Omit<BoxData, "id"> = {
             rgb: createRandomRGB(),
             timestamp: new Date().toISOString(),
         };
