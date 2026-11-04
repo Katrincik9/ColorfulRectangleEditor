@@ -6,21 +6,20 @@ export type BoxesAction =
     | ReturnType<typeof selectBox>
 
 export const addBox = (box: BoxData) => ({
-    type: "add_box" as const,
+    type: "add_box",
     payload: box
-})
+} as const)
 
-export const updateBoxColor = (id: string, rgb: RGB) => ({
-    type: "update_box_color" as const,
+export const updateBoxColor = (rgb: RGB) => ({
+    type: "update_box_color",
     payload: {
-        id: id,
         rgb: rgb
     }
-})
+} as const)
 
 export const selectBox = (id: string | null) => ({
-    type: "select_box" as const,
+    type: "select_box",
     payload: {
         id: id
     }
-})
+} as const )

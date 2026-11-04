@@ -1,5 +1,6 @@
 import type { BoxesState } from "../types/box"
 import type { BoxesAction } from "./boxActions"
+import { actions } from "./constants"
 
 const initialState: BoxesState = {
     boxes: [],
@@ -7,7 +8,7 @@ const initialState: BoxesState = {
 }
 
 export function boxesReducer(state = initialState, action: BoxesAction) {
-    if (action.type === "add_box") {
+    if (action.type === actions.add) {
         if (state.boxes.length < 9) {
             return {
                 ...state,
@@ -19,11 +20,11 @@ export function boxesReducer(state = initialState, action: BoxesAction) {
         }
     }
 
-    if (action.type === "update_box_color") {
+    if (action.type === actions.updateBoxColor) {
         return {
             ...state,
             boxes: state.boxes.map(box => {
-                if (box.id === action.payload.id) {
+                if (box.id === state.selectedBoxId) {
                     const updatedBox = { ...box }
                     updatedBox.rgb = action.payload.rgb
                     return updatedBox
@@ -33,7 +34,7 @@ export function boxesReducer(state = initialState, action: BoxesAction) {
         }
     }
 
-    if (action.type === "select_box") {
+    if (action.type === actions.selectBox) {
         return {
             ...state,
             selectedBoxId: action.payload.id

@@ -16,7 +16,7 @@ export function BoxEditor() {
 
     function onSubmit(data: RGB) {
         if (!selectedBoxId) return
-        dispatch(updateBoxColor(selectedBoxId, data));
+        dispatch(updateBoxColor(data));
     }
 
     useEffect(() => {
