@@ -70,8 +70,9 @@ export function BoxEditor() {
                     }}
                 />
 
-                <div className="form-submit-buttons">
+                <div className="form-submit-buttons edit-buttons">
                     <button type="submit" disabled={!isDirty || selectedBoxId === null || !isValid}>Apply Color</button>
+                    <button type="button" className="cancel-btn" disabled={!isDirty} onClick={() => reset()}>Cancel Changes</button>
                 </div>
             </form>
         </div>
