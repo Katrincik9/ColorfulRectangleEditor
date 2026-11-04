@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { useEffect } from 'react';
 
 export function BoxEditor() {
-    const { register, handleSubmit, reset, control, formState: { errors } } = useForm<RGB>();
+    const { register, handleSubmit, reset, control, formState: { errors, isDirty, isValid } } = useForm<RGB>({ mode : "onChange"});
     const watchedRGB = useWatch({ control })
     const dispatch = useAppDispatch();
     const selectedBoxId = useAppSelector(state => state.boxesReducer.selectedBoxId);
@@ -71,7 +71,7 @@ export function BoxEditor() {
                 />
 
                 <div className="form-submit-buttons">
-                    <button type="submit">Apply Color</button>
+                    <button type="submit" disabled={!isDirty || selectedBoxId === null || !isValid}>Apply Color</button>
                 </div>
             </form>
         </div>

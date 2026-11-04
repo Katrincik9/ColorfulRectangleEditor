@@ -15,7 +15,7 @@ const createRandomRGB = () => ({
 });
 
 export function BoxInserter() {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<RGB>();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<RGB>({ mode: "onChange" });
     const dispatch = useAppDispatch();
     const boxesCount = useAppSelector(state => state.boxesReducer.boxes.length);
 
