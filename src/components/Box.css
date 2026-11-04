@@ -4,7 +4,7 @@
     border: 1px solid var(--borderColor);
     border-radius: 30px;
     padding: 20px;
-    width: clamp(200px, 30vw, 300px);
+    width: clamp(200px, 35vw, 350px);
 }
 
 .box-form h4 {
