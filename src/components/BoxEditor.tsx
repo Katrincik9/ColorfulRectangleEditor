@@ -14,7 +14,7 @@ export function BoxEditor() {
     const selectedBox = useAppSelector(state => state.boxesReducer.boxes.find(box => box.id === selectedBoxId))
     const boxes = useAppSelector(state => state.boxesReducer.boxes);
     const selectedBoxIndex = boxes.findIndex(box => box.id === selectedBoxId);
-    const boxNr = selectedBoxIndex + 1;
+    const boxNr = selectedBoxIndex === -1 ? null : selectedBoxIndex + 1;
 
     function onSubmit(data: RGB) {
         if (!selectedBoxId) return
@@ -22,7 +22,15 @@ export function BoxEditor() {
     }
 
     useEffect(() => {
-        reset(selectedBox?.rgb);
+        if (selectedBox) {
+            reset(selectedBox.rgb);
+        } else {
+            reset({
+                red: "",
+                green: "",
+                blue: ""
+            })
+        }
     }, [selectedBox, reset])
 
     return (
@@ -66,7 +74,7 @@ export function BoxEditor() {
                 <p>Box number: {boxNr}</p>
                 <div className="rectangle"
                     style={{
-                        backgroundColor: watchedRGB
+                        backgroundColor: selectedBox && watchedRGB
                             ? `rgb(${watchedRGB.red}, ${watchedRGB.green}, ${watchedRGB.blue})`
                             : 'transparent',
                     }}
