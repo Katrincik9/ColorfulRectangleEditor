@@ -4,7 +4,7 @@ import './Box.css';
 import type { RGB } from '../types/box';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { useEffect } from 'react';
-import { deleteBox, updateBoxColor } from '../store/boxesReducer';
+import { deleteBox, undoColorChange, updateBoxColor } from '../store/boxesReducer';
 
 export function BoxEditor() {
     const { register, handleSubmit, reset, control, formState: { errors, isDirty, isValid } } = useForm<RGB>({ mode : "onChange"});
@@ -15,6 +15,7 @@ export function BoxEditor() {
     const boxes = useAppSelector(state => state.boxesReducer.boxes);
     const selectedBoxIndex = boxes.findIndex(box => box.id === selectedBoxId);
     const boxNr = selectedBoxIndex === -1 ? null : selectedBoxIndex + 1;
+    const lastColorChange = useAppSelector(state => state.boxesReducer.colorChangeHistory);
 
     function onSubmit(data: RGB) {
         if (!selectedBoxId) return
@@ -83,6 +84,7 @@ export function BoxEditor() {
                 <div className="form-submit-buttons edit-buttons">
                     <button type="submit" disabled={!isDirty || selectedBoxId === null || !isValid}>Apply Color</button>
                     <button type="button" disabled={!isDirty} onClick={() => reset()}>Cancel Changes</button>
+                    <button type="button" disabled={lastColorChange.length === 0} onClick={() => dispatch(undoColorChange())}>Undo Changes</button>
                     <button type="button" disabled={selectedBoxId === null} onClick={() => dispatch(deleteBox())}>Delete box</button>
                 </div>
             </form>

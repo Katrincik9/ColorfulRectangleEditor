@@ -4,7 +4,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 const initialState: BoxesState = {
     boxes: [],
     selectedBoxId: null,
-    nextBoxId: 1
+    nextBoxId: 1,
+    colorChangeHistory: []
 }
 
 export const boxesSlice = createSlice({
@@ -24,6 +25,10 @@ export const boxesSlice = createSlice({
         updateBoxColor: (state, action: PayloadAction<{ rgb: RGB }>) => {
             state.boxes.forEach(box => {
                 if (box.id === state.selectedBoxId) {
+                    state.colorChangeHistory.push({
+                        boxId: box.id,
+                        previousRGB: { ...box.rgb }
+                    })
                     box.rgb = action.payload.rgb
                 }
             })
@@ -35,11 +40,23 @@ export const boxesSlice = createSlice({
 
         deleteBox: (state) => {
             state.boxes = state.boxes.filter(box => box.id !== state.selectedBoxId)
+            state.colorChangeHistory = state.colorChangeHistory.filter(change => change.boxId !== state.selectedBoxId)
             state.selectedBoxId = null
         },
+
+        undoColorChange: (state) => {
+            const change = state.colorChangeHistory[state.colorChangeHistory.length - 1]
+            if (!change) return;
+            const box = state.boxes.find(box => box.id === change.boxId)
+            if (box) {
+                box.rgb = change.previousRGB
+                state.selectedBoxId = box.id
+            }
+            state.colorChangeHistory.pop();
+        }
     },
 })
 
-export const { addBox, updateBoxColor, selectBox, deleteBox } = boxesSlice.actions
+export const { addBox, updateBoxColor, selectBox, deleteBox, undoColorChange } = boxesSlice.actions
 
 export default boxesSlice.reducer

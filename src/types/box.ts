@@ -13,5 +13,11 @@ export interface RGB {
 export interface BoxesState {
     boxes: BoxData[],
     selectedBoxId: string | null,
-    nextBoxId: number
+    nextBoxId: number,
+    colorChangeHistory: lastColorChange[] 
+}
+
+export interface lastColorChange {
+    boxId: string,
+    previousRGB: RGB
 }
