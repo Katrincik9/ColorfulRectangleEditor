@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { selectBox } from '../store/boxActions';
+import { selectBox } from '../store/boxesReducer';
 import type { RGB } from '../types/box';
 import './BoxList.css';
 
@@ -12,7 +12,7 @@ export function BoxList() {
         <>
             <h4>Box List</h4>
             <div className="box-list">
-                {boxes.map(box => <BoxItem key={box.id} color={box.rgb} selected={box.id === selectedBoxId} onSelect={() => dispatch(selectBox(box.id))}></BoxItem>)}
+                {boxes.map(box => <BoxItem key={box.id} color={box.rgb} selected={box.id === selectedBoxId} onSelect={() => dispatch(selectBox({id: box.id}))}></BoxItem>)}
             </div>
         </>
     )

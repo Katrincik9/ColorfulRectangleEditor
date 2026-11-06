@@ -1,17 +1,21 @@
-import { combineReducers, legacy_createStore } from "redux";
-import { boxesReducer } from "./boxesReducer";
+import { boxesSlice } from "./boxesReducer";
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 const persistConfig = {
     key: "root",
     storage
 }
 
-const rootReducer = combineReducers({ boxesReducer })
+const rootReducer = combineReducers({
+    boxesReducer: boxesSlice.reducer,
+})
 const persistentReducer = persistReducer(persistConfig, rootReducer)
 
-export const store = legacy_createStore(persistentReducer)
+export const store = configureStore({
+    reducer: persistentReducer,
+})
 export const persistor = persistStore(store)
 
 export type AppStore = typeof store

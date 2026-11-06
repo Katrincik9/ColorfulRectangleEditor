@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { addBox } from '../store/boxActions';
+import { addBox } from '../store/boxesReducer';
 import type { BoxData, RGB } from '../types/box';
 import './BoxInserter.css';
 import './Box.css';
